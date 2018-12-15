@@ -2,7 +2,11 @@
 namespace mystl{
 	template<typename T>
 	class vector{
+		private:
+			T* data;
+			unsigned int Capacity,Size;
 		public:
+			typedef T* iterator;
 			vector(){
 				data=NULL;
 				Capacity=Size=0;
@@ -14,7 +18,7 @@ namespace mystl{
 			vector(const vector& other){
 				if(this==&other)return;
 				data=new T[other.Size];
-				for(int i=0;i<Size;++i){
+				for(int i=0;i<other.Size;++i){
 					data[i]=other[i];
 				}
 				capacity=other.Capacity;
@@ -30,15 +34,27 @@ namespace mystl{
 				}
 				return data[index];
 			}
-			T* begin(){
+			const iterator begin(){
 				return data;
 			}
-			T* end(){
+			const iterator end(){
 				return data+Size;
+			}
+			unsigned int size(){
+				return Size;
+			}
+			unsigned int capacity(){
+				return Capacity;
+			}
+			const T front(){
+				return *begin();
+			}
+			const T back(){
+				return *(end()-1);
 			}
 			const vector& push_back(const T temp){
 				if(Size>=Capacity){
-					T* newdata=new T[Capacity*2+1];
+					iterator newdata=new T[Capacity*2+1];
 					memmove(newdata,data,Size*sizeof(T));
 					delete[] data;
 					data=newdata;
@@ -49,22 +65,65 @@ namespace mystl{
 			}
 			const vector& pop_back(){
 				--Size;
+				return *this;
 			}
-			unsigned int size(){
-				return Size;
+			const vector& insert(const iterator pos,const T val,const int num=1){
+				if(pos<begin()||pos>end()){
+					puts("");
+					puts("In vector:");
+					puts("    ERROR: In Insert: Pos is too big or too small");
+					puts("");
+					exit(0);
+				} 
+				for(int i=0;i<num;++i){
+					iterator it=end()-1;
+					while(it>=pos){
+						*(it+1)=*it;
+						it--;
+					}
+					*pos=val;
+					Size++;
+				}
+				return *this;	
 			}
-			unsigned int capacity(){
-				return Capacity;
+			const vector& erase(const iterator pos,const int num=1){
+				if(pos<begin()||pos>end()){
+					puts("");
+					puts("In vector:");
+					puts("    ERROR: In erase: Pos is too big or too small");
+					puts("");
+					exit(0);
+				}
+				for(int i=0;i<num;++i){
+					iterator it=pos;
+					while(it!=end()){
+						*it=*(it+1);
+						it++;
+					}
+					Size--;
+				}
+				return *this;
 			}
-			typedef T* iterator;
-		private:
-			T* data;
-			unsigned int Capacity,Size;
+			const vector& erase(const iterator l,const iterator r){
+				if(l<begin()||l>end()||r<begin()||r>end()||r<l){
+					puts("");
+					puts("In vector:");
+					puts("    ERROR: In erase: Pos is too big or too small or l>r");
+					puts("");
+					exit(0);
+				}
+				iterator i=l,j=r;
+				int del=r-l;
+				Size-=del;
+				while(i!=end()){
+					*i=*j;
+					i++,j++;
+				}
+				return *this;
+			}
 	};
 }
 using namespace mystl;
-vector<int>q;
 int main(){
-	q[1];
 }
  

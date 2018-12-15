@@ -35,21 +35,22 @@ namespace mystl{
 	}
 }
 using namespace mystl;
-int a[100010];
-	template<typename T>
-	bool CMP(T a,T b){
-		return a<b;
-	}
+struct data{
+	int x,y;
+}a[100010];
+bool operator <(data a,data b){
+    return a.x<b.x; 
+} 
 int main(){
 //	freopen("1.in","r",stdin);
 //	freopen("1.out","w",stdout);
 	int n;
 	scanf("%d",&n);
 	for(int i=1;i<=n;++i){
-		scanf("%d",a+i);
+		scanf("%d%d",&a[i].x,&a[i].y);
 	}
 	sort(a+1,a+n+1);
 	for(int i=1;i<=n;++i){
-		printf("%d ",a[i]);
+		printf("%d %d\n",a[i].x,a[i].y);
 	}
 }
