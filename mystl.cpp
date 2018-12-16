@@ -3,8 +3,8 @@
 namespace mystl{
 	//vector begin
 	//Build. --2018.12.15
-	//Support Insert and erase. --2018.12.15
-	template<typename T>
+	//Support insert and erase. --2018.12.15
+	//Repair insert. --2018.12.16
 	class vector{
 		private:
 			T* data;
@@ -75,18 +75,25 @@ namespace mystl{
 				if(pos<begin()||pos>end()){
 					puts("");
 					puts("In vector:");
-					puts("    ERROR: In Insert: Pos is too big or too small");
+					puts("    ERROR: In insert: Pos is too big or too small");
 					puts("");
 					exit(0);
 				} 
+				int left=pos-begin();
 				for(int i=0;i<num;++i){
-					iterator it=end()-1;
-					while(it>=pos){
-						*(it+1)=*it;
-						it--;
-					}
-					*pos=val;
-					Size++;
+					iterator _pos=begin()+left;
+					if(_pos==end()){
+						push_back(val);
+					}else{
+						iterator it=end()-2;
+						T _val=*(end()-1);
+						while(it>=_pos){
+							*(it+1)=*it;
+							it--;
+						}
+						*_pos=val;
+						push_back(_val);
+				    }
 				}
 				return *this;	
 			}
@@ -124,6 +131,10 @@ namespace mystl{
 					i++,j++;
 				}
 				return *this;
+			}
+			void write(){
+				iterator it=begin();
+				for(;it!=end();++it)std::cout<<*it<<' ';
 			}
 	};
 	//vector end
