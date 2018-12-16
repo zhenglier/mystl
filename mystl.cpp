@@ -180,7 +180,7 @@ namespace mystl{
 	
 	//iostream begin
 	//Build. --2018.12.16
-	//Support int,long long,char. --2018.12.16
+	//Support int,unsigneed int,long longunsigned long long,,char. --2018.12.16
 	struct istream{}cin;
 	struct ostream{}cout;
 	#define gc(x) (x=getchar())
@@ -195,12 +195,26 @@ namespace mystl{
 		for(;isdigit(c);ret=(ret<<1)+(ret<<3)+c-'0',gc(c));
 		val=(f?-ret:ret);
 	}
+	//unsigned int
+	istream& operator >>(const istream& in,unsigned int& val){
+		unsigned int ret=0;char c;
+		for(gc(c);!isdigit(c);c=getchar());
+		for(;isdigit(c);ret=(ret<<1)+(ret<<3)+c-'0',gc(c));
+		val=ret;
+	}
 	//long long
 	istream& operator >>(const istream& in,long long& val){
 		long long ret=0;bool f=0;char c;
 		for(gc(c);!isdigit(c);c=getchar())f|=(c=='-');
 		for(;isdigit(c);ret=(ret<<1ll)+(ret<<3ll)+c-'0',gc(c));
 		val=(f?-ret:ret);
+	}
+	//unsigned long long
+	istream& operator >>(const istream& in,unsigned long long& val){
+		unsigned long long ret=0;char c;
+		for(gc(c);!isdigit(c);c=getchar());
+		for(;isdigit(c);ret=(ret<<1)+(ret<<3)+c-'0',gc(c));
+		val=ret;
 	}
 	//char
 	istream& operator >>(const istream& in,char &val){
@@ -228,10 +242,36 @@ namespace mystl{
 			pc(*(c+cnt));
 		}
 	}
+	//unsigned int
+	ostream& operator <<(const ostream& out,unsigned int val){
+		char* c=new char[10];int cnt=0;
+		while(val){
+			*(c+cnt)=val%10+'0';
+			val/=10;
+			cnt++;
+		}
+		while(cnt){
+			cnt--;
+			pc(*(c+cnt));
+		}
+	}
 	//long long
 	ostream& operator <<(const ostream& out,long long val){
-		char* c=new char[220];int cnt=0;
+		char* c=new char[20];int cnt=0;
 		if(val<0)pc('-'),val=-val;
+		while(val){
+			*(c+cnt)=val%10+'0';
+			val/=10;
+			cnt++;
+		}
+		while(cnt){
+			cnt--;
+			pc(*(c+cnt));
+		}
+	}
+	//unsigned long long
+	ostream& operator <<(const ostream& out,unsigned long long val){
+		char* c=new char[20];int cnt=0;
 		while(val){
 			*(c+cnt)=val%10+'0';
 			val/=10;
