@@ -5,6 +5,7 @@ namespace mystl{
 	//Build. --2018.12.15
 	//Support insert and erase. --2018.12.15
 	//Repair insert. --2018.12.16
+	template<typename T>
 	class vector{
 		private:
 			T* data;
