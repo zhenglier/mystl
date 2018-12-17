@@ -42,6 +42,7 @@ namespace mystl{
 			return (a)<=(b);
 		}
 	};
+	
 	template<typename T>
 	void sort(T* begin,T* end){
 		#define int unsigned int
