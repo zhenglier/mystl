@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include<stdio.h>
 namespace mystl{
 	struct istream{}cin;
 	struct ostream{}cout;
@@ -10,7 +10,7 @@ namespace mystl{
 	//int
 	istream& operator >>(const istream& in,int& val){
 		int ret=0;bool f=0;char c;
-		for(gc(c);!isdigit(c);c=getchar())f|=(c=='-');
+		for(gc(c);!isdigit(c);c=getchar())f=(c=='-');
 		for(;isdigit(c);ret=(ret<<1)+(ret<<3)+c-'0',gc(c));
 		val=(f?-ret:ret);
 	}
@@ -24,7 +24,7 @@ namespace mystl{
 	//long long
 	istream& operator >>(const istream& in,long long& val){
 		long long ret=0;bool f=0;char c;
-		for(gc(c);!isdigit(c);c=getchar())f|=(c=='-');
+		for(gc(c);!isdigit(c);c=getchar())f=(c=='-');
 		for(;isdigit(c);ret=(ret<<1ll)+(ret<<3ll)+c-'0',gc(c));
 		val=(f?-ret:ret);
 	}
@@ -36,9 +36,17 @@ namespace mystl{
 		val=ret;
 	}
 	//char
-	istream& operator >>(const istream& in,char &val){
+	istream& operator >>(const istream& in,char& val){
 	    gc(val);
 		while(!ok(val))gc(val);
+	}
+	//float I'm lazy.
+	istream& operator >>(const istream& in,float& val){
+		scanf("%f",&val);
+	}
+	//double I'm lazy.
+	istream& operator >>(const istream& in,double& val){
+		scanf("%lf",&val);
 	}
 	
 	//OUT:
@@ -60,6 +68,7 @@ namespace mystl{
 			cnt--;
 			pc(*(c+cnt));
 		}
+		delete[]c;
 	}
 	//unsigned int
 	ostream& operator <<(const ostream& out,unsigned int val){
@@ -73,6 +82,7 @@ namespace mystl{
 			cnt--;
 			pc(*(c+cnt));
 		}
+		delete[]c;
 	}
 	//long long
 	ostream& operator <<(const ostream& out,long long val){
@@ -87,6 +97,7 @@ namespace mystl{
 			cnt--;
 			pc(*(c+cnt));
 		}
+		delete[]c;
 	}
 	//unsigned long long
 	ostream& operator <<(const ostream& out,unsigned long long val){
@@ -100,10 +111,19 @@ namespace mystl{
 			cnt--;
 			pc(*(c+cnt));
 		}
+		delete[]c;
 	}
 	//char
 	ostream& operator <<(const ostream& out,char val){
 		pc(val);
+	}
+	//float I'm lazy.
+	ostream& operator <<(const ostream& out,float& val){
+		printf("%f",&val);
+	}
+	//double I'm lazy.
+	ostream& operator <<(const ostream& out,double& val){
+		printf("%lf",&val);
 	}
 	#undef gc
 	#undef pc

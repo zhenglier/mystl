@@ -1,5 +1,5 @@
 //mystl by zheglier
-#include<bits/stdc++.h>
+#include<stdio.h>
 namespace mystl{
 	//vector begin
 	//Build. --2018.12.15
@@ -35,7 +35,7 @@ namespace mystl{
 					puts("In vector:");
 					puts("    ERROR: Index is too large.");
 					puts("");
-					exit(0);
+					return *this;
 				}
 				return data[index];
 			}
@@ -78,7 +78,7 @@ namespace mystl{
 					puts("In vector:");
 					puts("    ERROR: In insert: Pos is too big or too small");
 					puts("");
-					exit(0);
+					return *this;
 				} 
 				int left=pos-begin();
 				for(int i=0;i<num;++i){
@@ -104,7 +104,7 @@ namespace mystl{
 					puts("In vector:");
 					puts("    ERROR: In erase: Pos is too big or too small");
 					puts("");
-					exit(0);
+					return *this;
 				}
 				for(int i=0;i<num;++i){
 					iterator it=pos;
@@ -122,7 +122,7 @@ namespace mystl{
 					puts("In vector:");
 					puts("    ERROR: In erase: Pos is too big or too small or l>r");
 					puts("");
-					exit(0);
+					return *this;
 				}
 				iterator i=l,j=r;
 				int del=r-l;
@@ -133,16 +133,57 @@ namespace mystl{
 				}
 				return *this;
 			}
-			void write(){
-				iterator it=begin();
-				for(;it!=end();++it)std::cout<<*it<<' ';
-			}
 	};
 	//vector end
 	
 	//sort begin
 	//Build.It doesn't support cmp. --2018.12.15
 	//Support struct. --2018.12.15
+	//Support cmp. --2018.12.17
+	
+	//CMP
+	//equal_to
+	template<typename T>
+	struct equal_to{
+		const bool operator()(T a,T b)const{
+			return (a)==(b);
+		}
+	};
+	//not_equal_to
+	template<typename T>
+	struct not_equal_to{
+		const bool operator()(T a,T b)const{
+			return (a)!=(b);
+		}
+	};
+	//greater
+	template<typename T>
+	struct greater{
+		const bool operator()(T a,T b)const{
+			return (a)>(b);
+		}
+	};
+	//less
+	template<typename T>
+	struct less{
+		const bool operator()(T a,T b)const{
+			return (a)<(b);
+		}
+	};
+	//greater_equal
+	template<typename T>
+	struct greater_equal{
+		const bool operator()(T a,T b)const{
+			return (a)>=(b);
+		}
+	};
+	//less_equal
+	template<typename T>
+	struct less_equal{
+		const bool operator()(T a,T b)const{
+			return (a)<=(b);
+		}
+	};
 	template<typename T>
 	void sort(T* begin,T* end){
 		#define int unsigned int
@@ -176,11 +217,46 @@ namespace mystl{
 		delete[] ls;
 		#undef int
 	}
+	//with cmp
+	template<typename T,typename _cmp>
+	void sort(T* begin,T* end,_cmp _comp){
+		#define int unsigned int
+		if(end-begin<=1)return;
+		T* mid=begin+((int)(end-begin)/2);
+		sort(begin,mid,_comp);
+		sort(mid,end,_comp);
+		T* ls=new T[end-begin];int cnt=0;
+		T* i=begin;
+		T* j=mid;
+		while(i<mid&&j<end){
+			if(_comp(*i,*j)){
+				ls[cnt++]=*i;
+				i++;
+			}else{
+				ls[cnt++]=*j;
+				j++;
+			}
+		}
+		while(i<mid){
+			ls[cnt++]=*i;
+			i++;
+		}
+		while(j<end){
+			ls[cnt++]=*j;
+			j++;
+		}
+		for(int i=0;i<cnt;++i){
+			begin[i]=ls[i];
+		}
+		delete[] ls;
+		#undef int
+	}
 	//sort end 
 	
 	//iostream begin
 	//Build. --2018.12.16
-	//Support int,unsigneed int,long longunsigned long long,,char. --2018.12.16
+	//Support int,unsigneed int,long longunsigned long long,char. --2018.12.16
+	//Suppor float,double. --2018.12.17
 	struct istream{}cin;
 	struct ostream{}cout;
 	#define gc(x) (x=getchar())
@@ -191,7 +267,7 @@ namespace mystl{
 	//int
 	istream& operator >>(const istream& in,int& val){
 		int ret=0;bool f=0;char c;
-		for(gc(c);!isdigit(c);c=getchar())f|=(c=='-');
+		for(gc(c);!isdigit(c);c=getchar())f=(c=='-');
 		for(;isdigit(c);ret=(ret<<1)+(ret<<3)+c-'0',gc(c));
 		val=(f?-ret:ret);
 	}
@@ -205,7 +281,7 @@ namespace mystl{
 	//long long
 	istream& operator >>(const istream& in,long long& val){
 		long long ret=0;bool f=0;char c;
-		for(gc(c);!isdigit(c);c=getchar())f|=(c=='-');
+		for(gc(c);!isdigit(c);c=getchar())f=(c=='-');
 		for(;isdigit(c);ret=(ret<<1ll)+(ret<<3ll)+c-'0',gc(c));
 		val=(f?-ret:ret);
 	}
@@ -217,9 +293,17 @@ namespace mystl{
 		val=ret;
 	}
 	//char
-	istream& operator >>(const istream& in,char &val){
+	istream& operator >>(const istream& in,char& val){
 	    gc(val);
 		while(!ok(val))gc(val);
+	}
+	//float I'm lazy.
+	istream& operator >>(const istream& in,float& val){
+		scanf("%f",&val);
+	}
+	//double I'm lazy.
+	istream& operator >>(const istream& in,double& val){
+		scanf("%lf",&val);
 	}
 	
 	//OUT:
@@ -241,6 +325,7 @@ namespace mystl{
 			cnt--;
 			pc(*(c+cnt));
 		}
+		delete[]c;
 	}
 	//unsigned int
 	ostream& operator <<(const ostream& out,unsigned int val){
@@ -254,6 +339,7 @@ namespace mystl{
 			cnt--;
 			pc(*(c+cnt));
 		}
+		delete[]c;
 	}
 	//long long
 	ostream& operator <<(const ostream& out,long long val){
@@ -268,6 +354,7 @@ namespace mystl{
 			cnt--;
 			pc(*(c+cnt));
 		}
+		delete[]c;
 	}
 	//unsigned long long
 	ostream& operator <<(const ostream& out,unsigned long long val){
@@ -281,10 +368,19 @@ namespace mystl{
 			cnt--;
 			pc(*(c+cnt));
 		}
+		delete[]c;
 	}
 	//char
 	ostream& operator <<(const ostream& out,char val){
 		pc(val);
+	}
+	//float I'm lazy.
+	ostream& operator <<(const ostream& out,float& val){
+		printf("%f",&val);
+	}
+	//double I'm lazy.
+	ostream& operator <<(const ostream& out,double& val){
+		printf("%lf",&val);
 	}
 	#undef gc
 	#undef pc

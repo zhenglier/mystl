@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include<stdio.h>
 namespace mystl{
 	template<typename T>
 	class vector{
@@ -30,7 +30,7 @@ namespace mystl{
 					puts("In vector:");
 					puts("    ERROR: Index is too large.");
 					puts("");
-					exit(0);
+					return *this;
 				}
 				return data[index];
 			}
@@ -73,7 +73,7 @@ namespace mystl{
 					puts("In vector:");
 					puts("    ERROR: In insert: Pos is too big or too small");
 					puts("");
-					exit(0);
+					return *this;
 				} 
 				int left=pos-begin();
 				for(int i=0;i<num;++i){
@@ -99,7 +99,7 @@ namespace mystl{
 					puts("In vector:");
 					puts("    ERROR: In erase: Pos is too big or too small");
 					puts("");
-					exit(0);
+					return *this;
 				}
 				for(int i=0;i<num;++i){
 					iterator it=pos;
@@ -117,7 +117,7 @@ namespace mystl{
 					puts("In vector:");
 					puts("    ERROR: In erase: Pos is too big or too small or l>r");
 					puts("");
-					exit(0);
+					return *this;
 				}
 				iterator i=l,j=r;
 				int del=r-l;
@@ -127,10 +127,6 @@ namespace mystl{
 					i++,j++;
 				}
 				return *this;
-			}
-			void write(){
-				iterator it=begin();
-				for(;it!=end();++it)std::cout<<*it<<' ';
 			}
 	};
 }
