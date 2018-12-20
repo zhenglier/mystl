@@ -21,20 +21,21 @@
 
 vector:
 
-- push_back()
+- push_back(T val)
 - pop_back()
 - iterator
 - begin()
 - end()
-- insert()
-- erase()
+- insert(iterator pos,T val,int sum=1)
+- erase(iterator pos,int sum)
+- erase(iterator begin,iterator end)
 
 
 
 iostream:
 
-- cin>>
-- cout<<
+- cin>>T val
+- cout<<T val
 - 支持类型：int,unsigned int,long long,unsigned long long,float,double,char
 
 
@@ -43,4 +44,13 @@ sort:
 
 - sort(T* a,T* b);
 - sort(T* a,T* b,cmp)
-- 支持greater,less,equal_to,not_equal_to,greater_equal,less_equal
+- cmp支持greater,less,equal_to,not_equal_to,greater_equal,less_equal
+
+
+
+
+queue:
+
+- push(T val)
+- pop()
+- front()
