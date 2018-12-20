@@ -8,8 +8,7 @@
 在自己的cpp文件的头文件中写上
 
 ```cpp
-#include "mystl.h"
-using namespace mystl;
+#include "stl.h"
 ```
 
 这里的头文件必须用""括起来。

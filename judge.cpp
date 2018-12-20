@@ -1,5 +1,4 @@
-#include"mystl.h""
-using namespace mystl;
+#include "stl.h"
 int n;
 vector<int> q;
 int main(){
