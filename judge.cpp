@@ -1,16 +1,11 @@
 #include "stl.h"
-int n;
-vector<int> q;
+queue<int>q;
 int main(){
-	cin>>n;
-	for(int i=1;i<=n;++i){
-		int a;
-		cin>>a;
-		q.push_back(a);
+	for(int i=1;i<=10;++i){
+		q.push(i*i/2);
 	}
-	sort(q.begin(),q.end(),greater<int>());
-	vector<int>::iterator it;
-	for(it=q.begin();it!=q.end();++it){
-		cout<<*it<<' ';
-	}cout<<endl;
+	for(int i=1;i<=10;++i){
+		cout<<q.front()<<endl;
+		q.pop();
+	}
 }

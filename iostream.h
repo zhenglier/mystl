@@ -60,6 +60,7 @@ ostream& operator <<(const ostream& out,_endl endl){
 }
 //int
 ostream& operator <<(const ostream& out,int val){
+	if(!val)putchar('0');
 	char* c=new char[10];int cnt=0;
 	if(val<0)pc('-'),val=-val;
 	while(val){
@@ -75,6 +76,7 @@ ostream& operator <<(const ostream& out,int val){
 }
 //unsigned int
 ostream& operator <<(const ostream& out,unsigned int val){
+	if(!val)putchar('0');
 	char* c=new char[10];int cnt=0;
 	while(val){
 		*(c+cnt)=val%10+'0';
@@ -89,6 +91,7 @@ ostream& operator <<(const ostream& out,unsigned int val){
 }
 //long long
 ostream& operator <<(const ostream& out,long long val){
+	if(!val)putchar('0');
 	char* c=new char[20];int cnt=0;
 	if(val<0)pc('-'),val=-val;
 	while(val){
@@ -104,6 +107,7 @@ ostream& operator <<(const ostream& out,long long val){
 }
 //unsigned long long
 ostream& operator <<(const ostream& out,unsigned long long val){
+	if(!val)putchar('0');
 	char* c=new char[20];int cnt=0;
 	while(val){
 		*(c+cnt)=val%10+'0';
